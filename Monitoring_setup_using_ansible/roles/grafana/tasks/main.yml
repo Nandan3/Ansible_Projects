@@ -15,8 +15,13 @@
     enabled: true
     state: started
 
-- name: "Check if Grafana is accessible."
+- name: Check if Grafana is accessible
   uri:
     url: http://127.0.0.1:3000
     method: GET
     status_code: 200
+  register: grafana_status
+  retries: 10
+  delay: 5
+  until: grafana_status.status == 200
+
